@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../utils/api';
+import Card from './Card';
 
 class Main extends React.Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class Main extends React.Component {
     this.state = {
       userName: null,
       userAvatar: null,
-      userDescription: null
+      userDescription: null,
+      userId: null,
+      cards: []
     }
   }
 
@@ -20,11 +23,20 @@ class Main extends React.Component {
       this.setState({
         userName: res.name,
         userAvatar: res.avatar,
-        userDescription: res.about
+        userDescription: res.about,
+        userId: res._id
       })
     })
     .catch((err) => {
       console.log(err);
+    })
+
+    api.getInitialCards()
+    .then((res) => {
+      this.setState({
+        ...this.state,
+        cards: res
+      })
     })
   }
 
@@ -45,7 +57,13 @@ class Main extends React.Component {
         </section>
 
         <section className="elements">
-
+          {
+            this.state.cards.map((card) => {
+              return (
+                <Card cardInfo={card} key={card._id} onCardClick={this.props.onCardClick} />
+              )
+            })
+          }
           <template id="temp">
             <div className="element">
               <button type="button" className="element__button"></button>

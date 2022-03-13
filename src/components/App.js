@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -10,6 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -27,12 +28,31 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard(false)
   }
+
+  function handleCardClick(card) {
+    setSelectedCard(card)
+  }
+
+  function escFunc(evt) {
+    if(evt.keyCode === 27) {
+      closeAllPopups();
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunc);
+
+    return () => {
+      document.removeEventListener('keydown', escFunc);
+    }
+  })
 
   return (
     <div className="page">
       <Header />
-      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
+      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
       <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
         <label className="popup__form-field">
           <input id="name-input" type="text" className="popup__input popup__input_type_name" name="name" placeholder="Имя" minLength="2" maxLength="40" required />
@@ -69,7 +89,7 @@ function App() {
         <button type="submit" className="popup__submit" name="del-confirm-submit">Да</button>
       </PopupWithForm>
 
-      <ImagePopup></ImagePopup>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
 
       <Footer />
     </div>

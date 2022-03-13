@@ -7,21 +7,6 @@ class PopupWithForm extends React.Component {
     this.name = props.name;
     this.children = props.children;
     this.openedPopupSelector = 'popup_opened';
-    this.onClose = props.onClose;
-  }
-
-  escFunc(evt) {
-    if(evt.keyCode === 27) {
-      console.log(this.onClose);
-    }
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.escFunc, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.escFunc, false);
   }
 
   render() {
