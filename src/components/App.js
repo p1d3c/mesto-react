@@ -10,7 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState(null)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -28,26 +28,26 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard(false)
+    setSelectedCard(null)
   }
 
   function handleCardClick(card) {
     setSelectedCard(card)
   }
 
-  function escFunc(evt) {
-    if(evt.keyCode === 27) {
-      closeAllPopups();
-    }
-  }
-
   useEffect(() => {
-    document.addEventListener('keydown', escFunc);
+    const handleEscClose = (evt) => {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscClose);
 
     return () => {
-      document.removeEventListener('keydown', escFunc);
+      document.removeEventListener('keydown', handleEscClose);
     }
-  })
+  }, [])
 
   return (
     <div className="page">

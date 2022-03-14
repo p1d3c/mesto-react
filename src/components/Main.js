@@ -38,6 +38,9 @@ class Main extends React.Component {
         cards: res
       })
     })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -64,19 +67,6 @@ class Main extends React.Component {
               )
             })
           }
-          <template id="temp">
-            <div className="element">
-              <button type="button" className="element__button"></button>
-              <img src="#" alt="#" className="element__image" />
-              <div className="element__text">
-                <h2 className="element__title"></h2>
-                <div className="element__likes-container">
-                  <button className="element__heart" type="button" name="heart"></button>
-                  <span className="element__likes-count"></span>
-                </div>
-              </div>
-            </div>
-          </template>
         </section>
       </main>
     );
