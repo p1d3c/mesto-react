@@ -4,12 +4,12 @@ import React from 'react';
 function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const isOwn = props.cardInfo.owner._id === currentUser._id
+  const isOwn = props.cardInfo.owner._id === currentUser.id
   const cardDeleteButtonClassName = (
     `element__button ${isOwn ? '' : 'element__button_hidden'}`
   )
 
-  const isLiked = props.cardInfo.likes.some(item => item._id === currentUser._id)
+  const isLiked = props.cardInfo.likes.some(item => item._id === currentUser.id)
   const cardLikeButtonClassName = (
     `element__heart ${isLiked ? 'element__heart_active' : ''}`
   )
