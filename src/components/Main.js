@@ -1,40 +1,24 @@
 import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/api';
 import Card from './Card';
 
 class Main extends React.Component {
+  static contextType = CurrentUserContext;
   constructor(props) {
     super(props);
     this.handleEditAvatarClick = props.onEditAvatar;
     this.handleEditProfileClick = props.onEditProfile;
     this.handleAddPlaceClick = props.onAddPlace;
     this.state = {
-      userName: null,
-      userAvatar: null,
-      userDescription: null,
-      userId: null,
       cards: []
     }
   }
 
   componentDidMount() {
-    api.getUserInfo()
-    .then((res) => {
-      this.setState({
-        userName: res.name,
-        userAvatar: res.avatar,
-        userDescription: res.about,
-        userId: res._id
-      })
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-
     api.getInitialCards()
     .then((res) => {
       this.setState({
-        ...this.state,
         cards: res
       })
     })
@@ -47,14 +31,14 @@ class Main extends React.Component {
     return (
       <main>
         <section className="profile">
-          <img src={this.state.userAvatar} alt="" className="profile__avatar" />
+          <img src={this.context.avatar} alt="" className="profile__avatar" />
           <div className="profile__edit-pen" onClick={this.handleEditAvatarClick}></div>
           <div className="profile__info">
             <div className="profile__row">
-              <h1 className="profile__title">{this.state.userName}</h1>
+              <h1 className="profile__title">{this.context.name}</h1>
               <button className="profile__edit-btn" onClick={this.handleEditProfileClick} type="button" name="edit"></button>
             </div>
-            <p className="profile__subtitle">{this.state.userDescription}</p>
+            <p className="profile__subtitle">{this.context.about}</p>
           </div>
           <button className="profile__add-btn" onClick={this.handleAddPlaceClick} type="button" name="add"></button>
         </section>

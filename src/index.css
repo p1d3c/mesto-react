@@ -28,6 +28,7 @@
 @import url(./blocks/element/__heart/_active/element__heart_active.css);
 @import url(./blocks/element/__likes-container/element__likes-container.css);
 @import url(./blocks/element/__likes-count/element__likes-count.css);
+@import url(./blocks/element/__button/_hidden/element__button_hidden.css);
 
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__copyright/footer__copyright.css);
