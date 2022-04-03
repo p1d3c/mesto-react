@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -73,17 +74,8 @@ function App() {
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
-        <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <label className="popup__form-field">
-            <input id="name-input" type="text" className="popup__input popup__input_type_name" name="name" placeholder="Имя" minLength="2" maxLength="40" required />
-            <span className="popup__input-error name-input-error"></span>
-          </label>
-          <label className="popup__form-field">
-            <input id="job-input" type="text" className="popup__input popup__input_type_job" name="desc" placeholder="Описание" minLength="2" maxLength="200" required />
-            <span className="popup__input-error job-input-error"></span>
-          </label>
-          <button type="submit" className="popup__submit" name={`edit-submit`}>Сохранить</button>
-        </PopupWithForm>
+
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <label className="popup__form-field">
