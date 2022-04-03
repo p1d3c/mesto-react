@@ -94,7 +94,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatarPopupInputValue.avatar
+        avatar: avatarPopupInputValue
       })
     })
     .then((res) => {

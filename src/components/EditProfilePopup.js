@@ -16,19 +16,28 @@ function EditProfilePopup(props) {
     setDescription(e.target.value);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    props.onUpdateUser({
+      name,
+      about: description
+    })
+  }
+
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser])
 
   return (
-    <PopupWithForm name="edit" title="Редактировать профиль" isOpen={props.isOpen} onClose={props.onClose}>
+    <PopupWithForm name="edit" title="Редактировать профиль" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
       <label className="popup__form-field">
-        <input id="name-input" type="text" className="popup__input popup__input_type_name" value={name} onChange={handleNameChange} name="name" placeholder="Имя" minLength="2" maxLength="40" required />
+        <input id="name-input" type="text" className="popup__input popup__input_type_name" value={name || ''} onChange={handleNameChange} name="name" placeholder="Имя" minLength="2" maxLength="40" required />
         <span className="popup__input-error name-input-error"></span>
       </label>
       <label className="popup__form-field">
-        <input id="job-input" type="text" className="popup__input popup__input_type_job" value={description} onChange={handleDescChange} name="desc" placeholder="Описание" minLength="2" maxLength="200" required />
+        <input id="job-input" type="text" className="popup__input popup__input_type_job" value={description || ''} onChange={handleDescChange} name="desc" placeholder="Описание" minLength="2" maxLength="200" required />
         <span className="popup__input-error job-input-error"></span>
       </label>
       <button type="submit" className="popup__submit" name={`edit-submit`}>Сохранить</button>

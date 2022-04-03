@@ -5,6 +5,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -37,6 +38,35 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
+  }
+
+  function handleUpdateUser({ name, about }) {
+    api.setUserInfo({ name, about })
+    .then((res) => {
+      setCurrentUser({
+        ...currentUser,
+        name: res.name,
+        about: res.about
+      })
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api.changeAvatar({ avatarPopupInputValue: avatar })
+    .then((res) => {
+      setCurrentUser({
+        ...currentUser,
+        avatar: res.avatar
+      })
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   useEffect(() => {
@@ -75,7 +105,7 @@ function App() {
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
 
         <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <label className="popup__form-field">
@@ -89,13 +119,7 @@ function App() {
           <button type="submit" className="popup__submit" name="add-submit">Создать</button>
         </PopupWithForm>
 
-        <PopupWithForm name="avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <label className="popup__form-field">
-            <input id="avatar-input" type="url" className="popup__input popup__input_type_avatar" name="avatar" placeholder="Ссылка" required />
-            <span className="popup__input-error avatar-input-error"></span>
-          </label>
-          <button type="submit" className="popup__submit" name="avatar-submit">Сохранить</button>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
         <PopupWithForm name="del-confirm" title="Вы уверены?" onClose={closeAllPopups}>
           <button type="submit" className="popup__submit" name="del-confirm-submit">Да</button>
