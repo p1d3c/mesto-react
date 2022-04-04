@@ -29,7 +29,9 @@ function App() {
     .then((newCard) => {
       setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   function handleCardDelete(card) {
@@ -72,13 +74,11 @@ function App() {
         ...currentUser,
         name: res.name,
         about: res.about
-      })
+      });
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(() => {
-      closeAllPopups();
     })
   }
 
@@ -88,26 +88,22 @@ function App() {
       setCurrentUser({
         ...currentUser,
         avatar: res.avatar
-      })
+      });
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(() => {
-      closeAllPopups();
     })
   }
 
   function handleAddPlace({ name, link }) {
     api.addCard({ name, link})
     .then((newCard) => {
-      setCards([newCard, ...cards])
+      setCards([newCard, ...cards]);
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(() => {
-      closeAllPopups();
     })
   }
 
