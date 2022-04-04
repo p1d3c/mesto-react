@@ -22,4 +22,4 @@
 
 **Github Pages**
 
-    [Ссылка на GitHub Pages](https://p1d3c.github.io/mestoproject)
+  [Ссылка на GitHub Pages](https://p1d3c.github.io/mestoproject)
