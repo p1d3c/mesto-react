@@ -30,7 +30,7 @@ function App() {
       setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     })
   }
 
